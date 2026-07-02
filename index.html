@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ginza Motors - Corporate Advantage Presentation</title>
+<style>
+:root {
+--crimson: #A31D1D;
+--navy: #1E293B;
+--slate: #475569;
+--platinum: #F8FAFC;
+--gold: #D97706;
+--white: #FFFFFF;
+}
+
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+background-color: #0F172A;
+color: var(--navy);
+overflow-x: hidden;
+height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+/* Presentation Frame */
+#presentation-container {
+flex-grow: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+
+.slide {
+display: none;
+width: 100%;
+max-width: 1280px;
+height: 720px;
+background: var(--platinum);
+border-radius: 16px;
+box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+overflow: hidden;
+position: relative;
+animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.slide.active {
+display: flex;
+flex-direction: column;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide Content Components */
+.slide-header {
+background: var(--navy);
+color: var(--white);
+padding: 20px 40px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 4px solid var(--crimson);
+}
+
+.slide-header h2 {
+font-size: 28px;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.slide-header .tagline {
+font-size: 14px;
+color: #94A3B8;
+}
+
+.slide-body {
+padding: 40px;
+flex-grow: 1;
+overflow-y: auto;
+}
+
+/* Slide 1: Title Slide Specifics */
+.title-slide {
+background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+color: var(--white);
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 60px;
+}
+
+.title-slide h1 {
+font-size: 48px;
+color: var(--white);
+margin-bottom: 10px;
+letter-spacing: 2px;
+}
+
+.title-slide .highlight {
+color: var(--crimson);
+}
+
+.title-slide h3 {
+font-size: 24px;
+color: var(--gold);
+margin-bottom: 40px;
+font-weight: 400;
+}
+
+.title-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 20px;
+width: 100%;
+max-width: 1000px;
+margin-top: 40px;
+}
+
+.title-card {
+background: rgba(255, 255, 255, 0.05);
+padding: 20px;
+border-radius: 8px;
+border-top: 3px solid var(--crimson);
+}
+
+/* Slide 2: Grid Perks layout */
+.perks-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 25px;
+}
+
+.perk-card {
+background: var(--white);
+padding: 25px;
+border-radius: 12px;
+border-left: 5px solid var(--crimson);
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.perk-card h3 {
+color: var(--navy);
+margin-bottom: 12px;
+font-size: 20px;
+}
+
+.perk-card ul {
+list-style-type: none;
+padding-left: 0;
+}
+
+.perk-card li {
+margin-bottom: 8px;
+position: relative;
+padding-left: 20px;
+color: var(--slate);
+}
+
+.perk-card li::before {
+content: "✓";
+position: absolute;
+left: 0;
+color: var(--crimson);
+font-weight: bold;
+}
+
+/* Slide 3: Catalog Architecture */
+.catalog-container {
+display: flex;
+flex-direction: column;
+gap: 20px;
+height: 100%;
+}
+
+.brand-filters {
+display: flex;
+gap: 10px;
+}
+
+.filter-btn {
+background: var(--white);
+border: 2px solid var(--navy);
+padding: 8px 20px;
+border-radius: 20px;
+cursor: pointer;
+font-weight: 600;
+transition: all 0.3s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+background: var(--crimson);
+color: var(--white);
+border-color: var(--crimson);
+}
+
+.grid-scroll-area {
+overflow-y: auto;
+flex-grow: 1;
+padding-right: 10px;
+}
+
+.catalog-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+}
+
+.car-card {
+background: var(--white);
+border-radius: 12px;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+overflow: hidden;
+border: 1px solid #E2E8F0;
+transition: transform 0.2s;
+}
+
+.car-card:hover {
+transform: translateY(-4px);
+}
+
+.car-img-placeholder {
+height: 130px;
+background: #EDF2F7;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #A0AEC0;
+font-size: 14px;
+font-style: italic;
+border-bottom: 1px solid #E2E8F0;
+}
+
+.car-details {
+padding: 15px;
+}
+
+.car-details h4 {
+font-size: 16px;
+margin-bottom: 10px;
+color: var(--navy);
+}
+
+.price-row {
+display: flex;
+flex-direction: column;
+gap: 8px;
+margin-bottom: 12px;
+}
+
+.price-field {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.price-field label {
+font-size: 12px;
+color: var(--slate);
+}
+
+.price-input {
+width: 120px;
+padding: 4px 8px;
+border: 1px solid #CBD5E1;
+border-radius: 4px;
+font-weight: 600;
+text-align: right;
+}
+
+.promo-input {
+border-color: var(--crimson);
+color: var(--crimson);
+background: #FFF5F5;
+}
+
+.calc-action-btn {
+width: 100%;
+background: var(--navy);
+color: var(--white);
+border: none;
+padding: 8px;
+border-radius: 6px;
+cursor: pointer;
+font-size: 13px;
+font-weight: 600;
+transition: background 0.2s;
+}
+
+.calc-action-btn:hover {
+background: var(--crimson);
+}
+
+/* Slide 4: Split Layout Calculator */
+.calculator-layout {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 40px;
+height: 100%;
+}
+
+.input-panel {
+background: var(--white);
+padding: 30px;
+border-radius: 12px;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.form-group label {
+font-weight: 600;
+font-size: 14px;
+color: var(--navy);
+}
+
+.form-control {
+padding: 10px 14px;
+border: 1px solid #CBD5E1;
+border-radius: 6px;
+font-size: 16px;
+width: 100%;
+}
+
+.slider-container {
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.slider-container input {
+flex-grow: 1;
+}
+
+.slider-val {
+font-weight: 700;
+color: var(--crimson);
+min-width: 60px;
+}
+
+.output-panel {
+background: var(--navy);
+color: var(--white);
+padding: 40px;
+border-radius: 12px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+border-bottom: 8px solid var(--crimson);
+}
+
+.output-panel h3 {
+font-size: 22px;
+color: #94A3B8;
+margin-bottom: 15px;
+text-transform: uppercase;
+}
+
+.monthly-payment {
+font-size: 54px;
+font-weight: 800;
+color: var(--white);
+margin-bottom: 20px;
+}
+
+.currency {
+color: var(--gold);
+}
+
+.perks-badge {
+background: rgba(255, 255, 255, 0.1);
+padding: 15px 25px;
+border-radius: 8px;
+border: 1px dashed var(--gold);
+font-size: 14px;
+max-width: 350px;
+}
+
+/* Presentation Controls Footer */
+#controls-bar {
+background: #1E293B;
+padding: 15px 40px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-top: 1px solid #334155;
+}
+
+.nav-btn {
+background: var(--crimson);
+color: var(--white);
+border: none;
+padding: 10px 24px;
+border-radius: 6px;
+cursor: pointer;
+font-weight: 600;
+transition: opacity 0.2s;
+}
+
+.nav-btn:hover {
+opacity: 0.9;
+}
+
+.dot-container {
+display: flex;
+gap: 10px;
+}
+
+.dot {
+width: 12px;
+height: 12px;
+background: #475569;
+border-radius: 50%;
+cursor: pointer;
+}
+
+.dot.active {
+background: var(--crimson);
+}
+</style>
+</head>
+<body>
+
+<div id="presentation-container">
+
+<!-- SLIDE 1: WELCOME & COVER -->
+<div class="slide active" id="slide-1">
+<div class="title-slide">
+<h1>GINZA MOTORS</h1>
+<h3>YOUR GATEWAY TO HIGH QUALITY JAPANESE VEHICLES</h3>
+<p style="font-size: 18px; max-width: 700px; margin: 0 auto; color: #94A3B8;">
+Corporate Advantage Package: End-to-end vehicle acquisition & servicing solution for corporate entities in Mauritius.
+</p>
+<div class="title-grid">
+<div class="title-card"><h4>Ginza Fleet Leader</h4></div>
+<div class="title-card"><h4>Safelane Insurance</h4></div>
+<div class="title-card"><h4>QuikFix Servicing</h4></div>
+<div class="title-card"><h4>Tyrexpert Mobility</h4></div>
+</div>
+<p style="margin-top: 40px; font-size: 12px; color: #475569;">Reference Document: Corporate Advantage Package (1).pdf</p>
+</div>
+</div>
+
+<!-- SLIDE 2: INTEGRATED BENEFITS PACKAGES -->
+<div class="slide" id="slide-2">
+<div class="slide-header">
+<h2>Ecosystem Partner Advantages</h2>
+<span class="tagline">Reference: image_6c62c1.jpg | image_6c656b.jpg | image_6c65a8.jpg</span>
+</div>
+<div class="slide-body">
+<div class="perks-grid">
+<div class="perk-card">
+<h3>Ginza Motors Edge</h3>
+<ul>
+<li>Customizable Corporate Fleet Adjustments</li>
+<li>3-Years Core Engine & Hybrid System Protection Warranty</li>
+<li>3 Complimentary Scheduled Fleet Servicing Interventions</li>
+</ul>
+</div>
+<div class="perk-card">
+<h3>Tyrexpert Fleet Care</h3>
+<ul>
+<li>15% Flat Rate Reductions across Select Heavy-Duty Tyre Units</li>
+<li>20% Off Specialist Car Maintenance Materials (Bullsone & Polish lines)</li>
+<li>15% Structural Markdown on Emergency Cell & Lead Battery replacements</li>
+</ul>
+</div>
+<div class="perk-card">
+<h3>QuikFix Service Operations</h3>
+<ul>
+<li>Mechanic Labor marked down by 15% overall</li>
+<li>Standard Part Inventory sourcing systematically slashed by 5%</li>
+<li>Specialist Hybrid Battery Reconditioning structural flat rates capped at Rs 2,875</li>
+</ul>
+</div>
+<div class="perk-card">
+<h3>Expert Leasing Structures</h3>
+<ul>
+<li>Integrated Credit lines mapped automatically against company scale</li>
+<li>Direct coordination minimizing onboarding corporate lag and processing documentation</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 3: INTERACTIVE EDITABLE CATALOG -->
+<div class="slide" id="slide-3">
+<div class="slide-header">
+<h2>Dynamic Vehicle Catalog Marketplace</h2>
+<span class="tagline">Populate your customized fleet baselines below. Changes map instantly to the Calculator slide.</span>
+</div>
+<div class="slide-body">
+<div class="catalog-container">
+<div class="brand-filters">
+<button class="filter-btn active" onclick="filterBrand('all')">All Cars</button>
+<button class="filter-btn" onclick="filterBrand('nissan')">Nissan</button>
+<button class="filter-btn" onclick="filterBrand('toyota')">Toyota</button>
+<button class="filter-btn" onclick="filterBrand('honda')">Honda</button>
+<button class="filter-btn" onclick="filterBrand('suzuki')">Suzuki</button>
+</div>
+<div class="grid-scroll-area">
+<div class="catalog-grid" id="catalog-grid-target">
+<!-- Code Injection through Javascript Logic -->
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 4: THE LIVE FINANCIAL CALCULATOR ENGINE -->
+<div class="slide" id="slide-4">
+<div class="slide-header">
+<h2>Interactive Lease Amortization Modeling</h2>
+<span class="tagline">Adjust leasing structures, values, variables and custom baseline assumptions.</span>
+</div>
+<div class="slide-body">
+<div class="calculator-layout">
+
+<div class="input-panel">
+<div class="form-group">
+<label for="calc-asset-select">Target Fleet Asset Selection</label>
+<select id="calc-asset-select" class="form-control" onchange="handleDropdownSelection()">
+<!-- Generated directly via vehicle configurations -->
+</select>
+</div>
+<div class="form-group">
+<label for="calc-promo-price">Custom Corporate Promo Price Override (Rs)</label>
+<input type="number" id="calc-promo-price" class="form-control" oninput="calculateLeaseEngine()">
+</div>
+<div class="form-group">
+<label for="calc-down-payment">Down Payment / Initial Deposit (Rs)</label>
+<input type="number" id="calc-down-payment" class="form-control" value="0" oninput="calculateLeaseEngine()">
+</div>
+<div class="form-group">
+<label for="calc-interest-rate">Configurable Annual Interest Base Rate (%)</label>
+<input type="number" id="calc-interest-rate" class="form-control" value="7" step="0.1" oninput="calculateLeaseEngine()">
+</div>
+<div class="form-group">
+<label>Extended Financing Matrix Terms</label>
+<div class="slider-container">
+<input type="range" id="calc-term-slider" min="5" max="8" value="5" step="1" oninput="updateSliderLabel(); calculateLeaseEngine();">
+<span class="slider-val" id="slider-term-label">5 Years</span>
+</div>
+</div>
+</div>
+
+<div class="output-panel">
+<h3>Projected Monthly Outlay</h3>
+<div class="monthly-payment"><span class="currency">Rs </span><span id="monthly-payment-target">0</span></div>
+<div class="perks-badge">
+Includes: 3 Free Servicings + 3-Year Engine-Hybrid System Structural Product Warranty Cover.
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- BOTTOM SLIDE CONTROLS BAR -->
+<div id="controls-bar">
+<button class="nav-btn" onclick="changeSlide(-1)">◀ Previous Slide</button>
+<div class="dot-container">
+<div class="dot active" onclick="jumpToSlide(1)"></div>
+<div class="dot" onclick="jumpToSlide(2)"></div>
+<div class="dot" onclick="jumpToSlide(3)"></div>
+<div class="dot" onclick="jumpToSlide(4)"></div>
+</div>
+<button class="nav-btn" onclick="changeSlide(1)">Next Slide ▶</button>
+</div>
+
+<script>
+// System Master Car Model Manifest Array
+const vehiclesManifest = [
+{ id: "n1", brand: "nissan", name: "Nissan March", normal: 750000, promo: 670000 },
+{ id: "n2", brand: "nissan", name: "Nissan Note E13", normal: 920000, promo: 840000 },
+{ id: "n3", brand: "nissan", name: "Nissan Note FE13", normal: 960000, promo: 880000 },
+{ id: "n4", brand: "nissan", name: "Nissan Kicks", normal: 1200000, promo: 1120000 },
+{ id: "t1", brand: "toyota", name: "Toyota Aqua", normal: 890000, promo: 810000 },
+{ id: "t2", brand: "toyota", name: "Toyota Corolla Sport", normal: 1150000, promo: 1070000 },
+{ id: "t3", brand: "toyota", name: "Toyota Corolla Sedan Petrol", normal: 1100000, promo: 1020000 },
+{ id: "t4", brand: "toyota", name: "Toyota Corolla Sedan Hybrid", normal: 1180000, promo: 1100000 },
+{ id: "t5", brand: "toyota", name: "Toyota CH-R", normal: 1350000, promo: 1270000 },
+{ id: "t6", brand: "toyota", name: "Toyota Yaris Cross", normal: 1250000, promo: 1170000 },
+{ id: "t7", brand: "toyota", name: "Toyota Yaris Hybrid", normal: 950000, promo: 870000 },
+{ id: "t8", brand: "toyota", name: "Toyota Yaris Petrol", normal: 880000, promo: 800000 },
+{ id: "t9", brand: "toyota", name: "Toyota Raize Petrol", normal: 900000, promo: 820000 },
+{ id: "t10", brand: "toyota", name: "Toyota Raize Hybrid", normal: 980000, promo: 900000 },
+{ id: "t11", brand: "toyota", name: "Toyota RAV4", normal: 1850000, promo: 1770000 },
+{ id: "t12", brand: "toyota", name: "Toyota Corolla Cross", normal: 1400000, promo: 1320000 },
+{ id: "h1", brand: "honda", name: "Honda Vezel", normal: 1300000, promo: 1220000 },
+{ id: "h2", brand: "honda", name: "Honda Shuttle", normal: 950000, promo: 870000 },
+{ id: "h3", brand: "honda", name: "Honda Fit", normal: 890000, promo: 810000 },
+{ id: "s1", brand: "suzuki", name: "Suzuki Swift", normal: 790000, promo: 710000 },
+{ id: "s2", brand: "suzuki", name: "Suzuki Ignis", normal: 720000, promo: 640000 }
+];
+
+let currentSlideIndex = 1;
+const totalSlides = 4;
+
+// Presentation Slide Controller
+function updateSlideDisplay() {
+document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+
+document.getElementById(`slide-${currentSlideIndex}`).classList.add('active');
+document.querySelectorAll('.dot')[currentSlideIndex - 1].classList.add('active');
+}
+
+function changeSlide(direction) {
+currentSlideIndex += direction;
+if (currentSlideIndex < 1) currentSlideIndex = 1;
+if (currentSlideIndex > totalSlides) currentSlideIndex = totalSlides;
+updateSlideDisplay();
+}
+
+function jumpToSlide(index) {
+currentSlideIndex = index;
+updateSlideDisplay();
+}
+
+// Catalog Visual Interface Rendering
+function renderCatalog() {
+const grid = document.getElementById('catalog-grid-target');
+grid.innerHTML = '';
+
+vehiclesManifest.forEach(car => {
+const card = document.createElement('div');
+card.className = `car-card brand-${car.brand}`;
+card.innerHTML = `
+<div class="car-img-placeholder">[ Photo Reference Holder: ${car.name} ]</div>
+<div class="car-details">
+<h4>${car.name}</h4>
+<div class="price-row">
+<div class="price-field">
+<label>Normal Price (Rs)</label>
+<input type="number" class="price-input" id="norm-in-${car.id}" value="${car.normal}" oninput="syncPrices('${car.id}', 'normal')">
+</div>
+<div class="price-field">
+<label>Promo Price (Rs)</label>
+<input type="number" class="price-input promo-input" id="promo-in-${car.id}" value="${car.promo}" oninput="syncPrices('${car.id}', 'promo')">
+</div>
+</div>
+<button class="calc-action-btn" onclick="sendToCalculator('${car.id}')">Analyze Lease Base</button>
+</div>
+`;
+grid.appendChild(card);
+});
+}
+
+// Multi-directional cross-field state synchronization engine
+function syncPrices(id, sourceMode) {
+const targetCar = vehiclesManifest.find(c => c.id === id);
+if (!targetCar) return;
+
+if (sourceMode === 'normal') {
+const normVal = parseFloat(document.getElementById(`norm-in-${id}`).value) || 0;
+targetCar.normal = normVal;
+} else {
+const promoVal = parseFloat(document.getElementById(`promo-in-${id}`).value) || 0;
+targetCar.promo = promoVal;
+}
+
+// Keep Calculator UI selection aligned if active element matches
+const currentSelectedDropdownId = document.getElementById('calc-asset-select').value;
+if (currentSelectedDropdownId === id) {
+handleDropdownSelection();
+}
+}
+
+function filterBrand(brand) {
+document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+event.target.classList.add('active');
+
+vehiclesManifest.forEach(car => {
+const cards = document.getElementsByClassName(`brand-${car.brand}`);
+for (let card of cards) {
+if (brand === 'all' || car.brand === brand) {
+card.style.display = 'block';
+} else {
+card.style.display = 'none';
+}
+}
+});
+}
+
+// Population of dropdown interface elements
+function populateDropdown() {
+const select = document.getElementById('calc-asset-select');
+select.innerHTML = '<option value="custom">-- Custom Baseline Parameter Input --</option>';
+
+vehiclesManifest.forEach(car => {
+const opt = document.createElement('option');
+opt.value = car.id;
+opt.innerText = car.name;
+select.appendChild(opt);
+});
+}
+
+function handleDropdownSelection() {
+const selectVal = document.getElementById('calc-asset-select').value;
+const promoInput = document.getElementById('calc-promo-price');
+
+if (selectVal !== 'custom') {
+const matchedCar = vehiclesManifest.find(c => c.id === selectVal);
+if (matchedCar) {
+promoInput.value = matchedCar.promo;
+}
+}
+calculateLeaseEngine();
+}
+
+function sendToCalculator(id) {
+document.getElementById('calc-asset-select').value = id;
+handleDropdownSelection();
+jumpToSlide(4);
+}
+
+function updateSliderLabel() {
+const years = document.getElementById('calc-term-slider').value;
+document.getElementById('slider-term-label').innerText = `${years} Years`;
+}
+
+// Lease Calculation Formula Architecture
+function calculateLeaseEngine() {
+const principalAssetBase = parseFloat(document.getElementById('calc-promo-price').value) || 0;
+const downPayment = parseFloat(document.getElementById('calc-down-payment').value) || 0;
+const interestInputRate = parseFloat(document.getElementById('calc-interest-rate').value) || 0;
+const totalTermYears = parseInt(document.getElementById('calc-term-slider').value) || 5;
+
+const netPrincipal = principalAssetBase - downPayment;
+
+if (netPrincipal <= 0) {
+document.getElementById('monthly-payment-target').innerText = "0";
+return;
+}
+
+const monthlyInterest = (interestInputRate / 100) / 12;
+const totalPaymentPeriodsMonths = totalTermYears * 12;
+
+let calculatedMonthlyOutlay = 0;
+
+if (monthlyInterest === 0) {
+calculatedMonthlyOutlay = netPrincipal / totalPaymentPeriodsMonths;
+} else {
+calculatedMonthlyOutlay = netPrincipal * (monthlyInterest * Math.pow(1 + monthlyInterest, totalPaymentPeriodsMonths)) / (Math.pow(1 + monthlyInterest, totalPaymentPeriodsMonths) - 1);
+}
+
+document.getElementById('monthly-payment-target').innerText = Math.round(calculatedMonthlyOutlay).toLocaleString('en-US');
+}
+
+// Core Init Execution Sequence
+window.onload = function() {
+renderCatalog();
+populateDropdown();
+handleDropdownSelection();
+};
+</script>
+
+</body>
+</html>
